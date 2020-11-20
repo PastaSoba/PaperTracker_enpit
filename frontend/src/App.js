@@ -22,10 +22,9 @@ class App extends React.Component {
     })
   }
 
-  handleSetTitle(){
-    var papertitle = document.getElementById("papername").value;
+  handleSetTitle(title){
     this.setState({
-      papertitle: papertitle
+      papertitle: title
     })
   }
 
@@ -39,7 +38,11 @@ class App extends React.Component {
             setPaperTitle={this.handleSetTitle}
             setCiteAndRef={this.handleSetCiteAndRef}
           />
-          <p>citations:
+          <p>
+            PAPER NAME: {this.state.papertitle}
+          </p>
+          
+          <p>CITATIONS:
             <ul>
             {this.state.citations.map((p) =>
               <li>{p["title"]} ({p["year"]})</li>
@@ -47,7 +50,8 @@ class App extends React.Component {
             </ul>
           </p>
 
-          <p>references:
+          <p>
+            REFERENCES:
             <ul>
             {this.state.references.map((p) =>
               <li>{p["title"]} ({p["year"]})</li>

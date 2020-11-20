@@ -8,26 +8,20 @@ class CrossRefSearch extends React.Component {
   }
 
   handleOnClick(){
-    this.props.setPaperTitle()
+    var BASE_URL = 'https://api.semanticscholar.org/v1/paper/'
+    var doi = document.getElementById("paperdoi").value; // 10.1145/1950413.1950462
+    var searchurl = BASE_URL + doi
 
     /* Searching through API 
     */
-    // TODO: これはデモデータであるため、タイトル名から検索する仕組みを作る
-    var DEMO_URL = 'https://api.semanticscholar.org/v1/paper/10.1145/1950413.1950462'
-    
-    fetch(DEMO_URL)
+    fetch(searchurl)
       .then(response => response.json())
       .then(data => {
-          // TODO: parserを作る
-          var citeobj = data["citations"]
-          var citations = citeobj.map(dt => ({"title":dt["title"], "year":dt["year"]}))
-          var refobj = data["references"]
-          var references = refobj.map(dt => ({"title":dt["title"], "year":dt["year"]}))
-          
-          this.props.setCiteAndRef(
-            citations,
-            references
-          )
+          this.props.setPaperTitle(data["title"])
+ 
+          var citations = data["citations"].map(dt => ({"title":dt["title"], "year":dt["year"]}))
+          var references = data["references"].map(dt => ({"title":dt["title"], "year":dt["year"]}))
+          this.props.setCiteAndRef(citations, references)
         }
       )
       .catch(error=> console.log(error))
@@ -36,9 +30,8 @@ class CrossRefSearch extends React.Component {
   render(){
     return (
       <div>
-        <input type = "search" placeholder = "調べたい論文名を入力" id = "papername" />
+        <input type = "search" placeholder = "調べたい論文のDOIを入力" id = "paperdoi" />
         <button onClick = { this.handleOnClick }> 検索 </button>
-        <p> Paper name is, { this.props.papertitle } </p>
       </div>
     )
   }
