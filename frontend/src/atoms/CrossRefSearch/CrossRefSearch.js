@@ -7,6 +7,14 @@ class CrossRefSearch extends React.Component {
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
+  parsePaperInfo(data){
+    return {
+      "title": data["title"],
+      "url": data["url"],
+      "year": data["year"],
+    }
+  }
+
   handleOnClick(){
     var BASE_URL = 'https://api.semanticscholar.org/v1/paper/'
     var doi = document.getElementById("paperdoi").value; // 10.1145/1950413.1950462
@@ -19,8 +27,8 @@ class CrossRefSearch extends React.Component {
       .then(data => {
           this.props.setPaperTitle(data["title"])
  
-          var citations = data["citations"].map(dt => ({"title":dt["title"], "year":dt["year"]}))
-          var references = data["references"].map(dt => ({"title":dt["title"], "year":dt["year"]}))
+          var citations = data["citations"].map(this.parsePaperInfo)
+          var references = data["references"].map(this.parsePaperInfo)
           this.props.setCiteAndRef(citations, references)
         }
       )

@@ -41,11 +41,16 @@ class App extends React.Component {
           <p>
             PAPER NAME: {this.state.papertitle}
           </p>
-          
+
           <p>CITATIONS:
             <ul>
             {this.state.citations.map((p) =>
-              <li>{p["title"]} ({p["year"]})</li>
+              <li>
+                <a href={p["url"]}>
+                  {p["title"]} 
+                </a>
+                ({p["year"]})
+              </li>
             )}
             </ul>
           </p>
@@ -54,7 +59,12 @@ class App extends React.Component {
             REFERENCES:
             <ul>
             {this.state.references.map((p) =>
-              <li>{p["title"]} ({p["year"]})</li>
+              <li>
+                <a href={p["url"]}>
+                  {p["title"]} 
+                </a>
+                ({p["year"]})
+              </li>
             )}
             </ul>
           </p>
