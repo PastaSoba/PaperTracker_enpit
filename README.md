@@ -31,17 +31,17 @@ pip install huga_package
 ``` 
 -->
 
-<!-- # Usage -->
+# Usage
 
-<!--
+
 DEMOの実行方法など、"hoge"の基本的な使い方を説明する
 
 ```bash
-git clone https://github.com/hoge/~
-cd examples
-python demo.py
+git clone https://github.com/PastaSoba/PaperTracker_enpit
+cd frontend
+yarn start
 ```
- -->
+
 
 <!-- # Note -->
 

@@ -7,14 +7,19 @@ class App extends React.Component {
     super(props)
     this.state = {
       papertitle: null,
-      refjson: null
+      citations: [],
+      references: [],
     }
 
+    this.handleSetCiteAndRef = this.handleSetCiteAndRef.bind(this)
     this.handleSetTitle = this.handleSetTitle.bind(this)
   }
 
-  handleApiResult(){
-
+  handleSetCiteAndRef(citations, references){
+    this.setState({
+      citations: citations,
+      references: references,
+    })
   }
 
   handleSetTitle(){
@@ -32,7 +37,23 @@ class App extends React.Component {
           <CrossRefSearch
             papertitle={this.state.papertitle}
             setPaperTitle={this.handleSetTitle}
+            setCiteAndRef={this.handleSetCiteAndRef}
           />
+          <p>citations:
+            <ul>
+            {this.state.citations.map((p) =>
+              <li>{p["title"]} ({p["year"]})</li>
+            )}
+            </ul>
+          </p>
+
+          <p>references:
+            <ul>
+            {this.state.references.map((p) =>
+              <li>{p["title"]} ({p["year"]})</li>
+            )}
+            </ul>
+          </p>
         </header>
       </div>
     );
