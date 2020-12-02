@@ -15,6 +15,10 @@ class SemanticscholarSearch extends React.Component {
     }
   }
 
+  sortByYear(a, b){
+    return a.year > b.year ? -1 : 1;
+  }
+
   handleOnClick(){
     var BASE_URL = 'https://api.semanticscholar.org/v1/paper/'
     var doi = document.getElementById("paperdoi").value; // 10.1145/1950413.1950462
@@ -28,7 +32,9 @@ class SemanticscholarSearch extends React.Component {
           this.props.setPaperTitle(data["title"])
  
           var citations = data["citations"].map(this.parsePaperInfo)
+          citations.sort(this.sortByYear)
           var references = data["references"].map(this.parsePaperInfo)
+          references.sort(this.sortByYear)
           this.props.setCiteAndRef(citations, references)
         }
       )
