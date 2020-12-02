@@ -36,6 +36,7 @@ class SemanticscholarSearch extends React.Component {
           var references = data["references"].map(this.parsePaperInfo)
           references.sort(this.sortByYear)
           this.props.setCiteAndRef(citations, references)
+          console.log(references)
         }
       )
       .catch(error=> console.log(error))
@@ -44,6 +45,7 @@ class SemanticscholarSearch extends React.Component {
   render(){
     return (
       <div>
+        <a> SemanticScholar Search : </a>
         <input type = "search" placeholder = "調べたい論文のDOIを入力" id = "paperdoi" />
         <button onClick = { this.handleOnClick }> 検索 </button>
       </div>
