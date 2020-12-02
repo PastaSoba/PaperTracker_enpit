@@ -39,10 +39,10 @@ class App extends React.Component {
             setCiteAndRef={this.handleSetCiteAndRef}
           />
           <p>
-            PAPER NAME: {this.state.papertitle}
+            検索論文名: {this.state.papertitle}
           </p>
 
-          <p>CITATIONS:
+          <p>検索論文を引用した論文:
             <ul>
             {this.state.citations.map((p) =>
               <li>
@@ -56,7 +56,7 @@ class App extends React.Component {
           </p>
 
           <p>
-            REFERENCES:
+            検索論文が引用した論文:
             <ul>
             {this.state.references.map((p) =>
               <li>
