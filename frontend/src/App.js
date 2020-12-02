@@ -1,6 +1,6 @@
 import './App.css';
 import React from "react"
-import CrossRefSearch from "./atoms/CrossRefSearch/CrossRefSearch"
+import SemanticscholarSearch from "./atoms/SemanticscholarSearch/SemanticscholarSearch"
 
 class App extends React.Component {
   constructor(props){
@@ -33,7 +33,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <h1>Paper Tracker</h1>
-          <CrossRefSearch
+          <SemanticscholarSearch
             papertitle={this.state.papertitle}
             setPaperTitle={this.handleSetTitle}
             setCiteAndRef={this.handleSetCiteAndRef}

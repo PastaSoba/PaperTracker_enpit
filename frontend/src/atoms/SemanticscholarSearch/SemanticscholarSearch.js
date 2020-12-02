@@ -1,6 +1,6 @@
 import React from "react"
 
-class CrossRefSearch extends React.Component {
+class SemanticscholarSearch extends React.Component {
   constructor(props){
     super(props);
 
@@ -45,4 +45,4 @@ class CrossRefSearch extends React.Component {
   }
 }
 
-export default CrossRefSearch;
+export default SemanticscholarSearch;
