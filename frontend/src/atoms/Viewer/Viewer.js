@@ -32,7 +32,9 @@ function YearRect(props) {
 
 function PaperRect(props) {
     return (
-      <Group>
+      <Group
+        on={("click", props.onClicked(props.paper["doi"]))}
+      >
         <Rect
           x={(RECT_WIDTH+RECT_MARGIN)*(props.col+1)}
           y={(RECT_HEIGHT+RECT_MARGIN)*props.row}
@@ -45,7 +47,7 @@ function PaperRect(props) {
           y={(RECT_HEIGHT+RECT_MARGIN)*props.row}
           width={RECT_WIDTH}
           height={RECT_HEIGHT}
-          text={props.title}
+          text={props.paper["title"]}
           />
       </Group>
     )
@@ -82,10 +84,11 @@ class Viewer extends React.Component {
             items.push(
               // 各論文データ
               <PaperRect 
-                title={citations[i]["title"]}
+                paper={citations[i]}
                 row={row}
                 col={col}
                 color={'lightgreen'}
+                onClicked={this.props.handleCellClicked}
               />
             );
           }
@@ -110,10 +113,11 @@ class Viewer extends React.Component {
             }
             items.push(
               <PaperRect 
-                title={references[i]["title"]}
+                paper={references[i]}
                 row={row}
                 col={col}
                 color={'lightpink'}
+                onClicked={this.props.handleCellClicked}
               />
             );
           }

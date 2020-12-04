@@ -29,6 +29,10 @@ class App extends React.Component {
     })
   }
 
+  handleCellClicked(doi){
+    document.getElementById("paperdoi").value = doi
+  }
+
   render() {
     return (
       <div className="App">
@@ -47,6 +51,7 @@ class App extends React.Component {
             papertitle={this.state.papertitle}
             citations={this.state.citations}
             references={this.state.references}
+            handleCellClicked={this.handleCellClicked}
           />
         </div>
       </div>

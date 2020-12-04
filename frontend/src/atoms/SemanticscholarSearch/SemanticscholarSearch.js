@@ -37,7 +37,6 @@ class SemanticscholarSearch extends React.Component {
           var references = data["references"].map(this.parsePaperInfo)
           references.sort(this.sortByYear)
           this.props.setCiteAndRef(citations, references)
-          console.log(references)
         }
       )
       .catch(error=> console.log(error))
