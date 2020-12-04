@@ -12,6 +12,7 @@ class SemanticscholarSearch extends React.Component {
       "title": data["title"],
       "url": data["url"],
       "year": data["year"],
+      "doi": data["doi"],
     }
   }
 
