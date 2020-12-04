@@ -30,27 +30,37 @@ function YearRect(props) {
   )
 }
 
-function PaperRect(props) {
+class PaperRect extends React.Component {
+  constructor(props){
+    super(props)
+
+    this.clickhandler = this.clickhandler.bind(this)
+  }
+
+  clickhandler(){
+    this.props.handleCellClicked(this.props.paper["doi"])
+  }
+
+  render(){
     return (
-      <Group
-        on={("click", props.onClicked(props.paper["doi"]))}
-      >
+      <Group onclick={ this.clickhandler }>
         <Rect
-          x={(RECT_WIDTH+RECT_MARGIN)*(props.col+1)}
-          y={(RECT_HEIGHT+RECT_MARGIN)*props.row}
+          x={(RECT_WIDTH+RECT_MARGIN)*(this.props.col+1)}
+          y={(RECT_HEIGHT+RECT_MARGIN)*this.props.row}
           width={RECT_WIDTH}
           height={RECT_HEIGHT}
-          fill={props.color}
+          fill={this.props.color}
         />
         <Text
-          x={(RECT_WIDTH+RECT_MARGIN)*(props.col+1)}
-          y={(RECT_HEIGHT+RECT_MARGIN)*props.row}
+          x={(RECT_WIDTH+RECT_MARGIN)*(this.props.col+1)}
+          y={(RECT_HEIGHT+RECT_MARGIN)*this.props.row}
           width={RECT_WIDTH}
           height={RECT_HEIGHT}
-          text={props.paper["title"]}
+          text={this.props.paper["title"]}
           />
       </Group>
     )
+  }
 }
 
 class Viewer extends React.Component {
@@ -88,7 +98,7 @@ class Viewer extends React.Component {
                 row={row}
                 col={col}
                 color={'lightgreen'}
-                onClicked={this.props.handleCellClicked}
+                handleCellClicked={this.props.handleCellClicked}
               />
             );
           }
@@ -101,14 +111,14 @@ class Viewer extends React.Component {
           for(let i=0; i<references.length; i++) {
             if(i===0){
               items.push(
-                <YearRect year={citations[i]["year"]} row={row} col={-1}/>
+                <YearRect year={references[i]["year"]} row={row} col={-1}/>
               );
             } else if(references[i]["year"] === references[i-1]["year"]) {
               col++                // 列を1つ左にずらす
             } else {
               col = 0; row++;      // 行を1つ増やす
               items.push(
-                <YearRect year={citations[i]["year"]} row={row} col={-1}/>
+                <YearRect year={references[i]["year"]} row={row} col={-1}/>
               );
             }
             items.push(
@@ -117,7 +127,7 @@ class Viewer extends React.Component {
                 row={row}
                 col={col}
                 color={'lightpink'}
-                onClicked={this.props.handleCellClicked}
+                handleCellClicked={this.props.handleCellClicked}
               />
             );
           }
