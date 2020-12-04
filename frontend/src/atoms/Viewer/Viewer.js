@@ -56,7 +56,7 @@ function PaperRect(props) {
 class Viewer extends React.Component {
   render() {
     return (
-      <Stage width={window.innerWidth} height={window.innerHeight}>
+      <Stage width={3000} height={3000}>
       <Layer>
         {/* 各論文セルをグリッド状にして可視化する部分 */}
         {(() => {

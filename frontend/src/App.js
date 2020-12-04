@@ -8,12 +8,13 @@ class App extends React.Component {
     super(props)
     this.state = {
       papertitle: null,
+      paperurl: null,
       citations: [],
       references: [],
     }
 
     this.handleSetCiteAndRef = this.handleSetCiteAndRef.bind(this)
-    this.handleSetTitle = this.handleSetTitle.bind(this)
+    this.handleSetTitleAndUrl = this.handleSetTitleAndUrl.bind(this)
   }
 
   handleSetCiteAndRef(citations, references){
@@ -23,9 +24,10 @@ class App extends React.Component {
     })
   }
 
-  handleSetTitle(title){
+  handleSetTitleAndUrl(title, url){
     this.setState({
-      papertitle: title
+      papertitle: title,
+      paperurl: url,
     })
   }
 
@@ -39,11 +41,14 @@ class App extends React.Component {
         <header className="App-header">
           <h1>Paper Tracker</h1>
           <SemanticscholarSearch
-            setPaperTitle={this.handleSetTitle}
+            setPaperTitleAndUrl={this.handleSetTitleAndUrl}
             setCiteAndRef={this.handleSetCiteAndRef}
           />
           <p>
-            検索論文名: {this.state.papertitle}
+            検索論文名: 
+            <a href={this.state.paperurl}>
+            {this.state.papertitle}
+            </a>
           </p>
         </header>
         <div>
