@@ -1,33 +1,34 @@
-import React, { useState } from "react"
+import React from "react"
 import { Stage, Layer, Rect, Text, Group } from 'react-konva';
-import Konva from 'konva';
 
 
 const RECT_WIDTH = 200;  // 格子の横幅
 const RECT_HEIGHT = 50;  // 格子の縦幅
 const RECT_MARGIN = 5;   // 格子間の距離
 
-function YearRect(props) {
-  return (
-    <Group>
-      <Rect
-        x={(RECT_WIDTH+RECT_MARGIN)*(props.col+1)}
-        y={(RECT_HEIGHT+RECT_MARGIN)*props.row}
-        width={RECT_WIDTH}
-        height={RECT_HEIGHT}
-      />
-      <Text
-        x={(RECT_WIDTH+RECT_MARGIN)*(props.col+1)}
-        y={(RECT_HEIGHT+RECT_MARGIN)*props.row}
-        width={RECT_WIDTH}
-        height={RECT_HEIGHT}
-        text={props.year}
-        fontSize={20}
-        align={"center"}
-        verticalAlign={"middle"}
+class YearRect extends React.Component {
+  render(){
+    return (
+      <Group>
+        <Rect
+          x={(RECT_WIDTH+RECT_MARGIN)*(this.props.col+1)}
+          y={(RECT_HEIGHT+RECT_MARGIN)*this.props.row}
+          width={RECT_WIDTH}
+          height={RECT_HEIGHT}
         />
-    </Group>
-  )
+        <Text
+          x={(RECT_WIDTH+RECT_MARGIN)*(this.props.col+1)}
+          y={(RECT_HEIGHT+RECT_MARGIN)*this.props.row}
+          width={RECT_WIDTH}
+          height={RECT_HEIGHT}
+          text={this.props.year}
+          fontSize={20}
+          align={"center"}
+          verticalAlign={"middle"}
+          />
+      </Group>
+    )
+  }
 }
 
 class PaperRect extends React.Component {
