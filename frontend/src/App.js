@@ -67,7 +67,7 @@ class App extends React.Component {
             </a>
           </p>
           <p>
-            オプション（より多くのリクエストを送信します）<br/>
+            オプション（デモ動作）<br/>
             <label>
               <input
                 type="checkbox"
