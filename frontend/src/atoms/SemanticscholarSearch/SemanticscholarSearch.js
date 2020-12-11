@@ -12,6 +12,7 @@ class SemanticscholarSearch extends React.Component {
       "title": data["title"],
       "url": data["url"],
       "year": data["year"],
+      "doi": data["doi"],
     }
   }
 
@@ -29,14 +30,13 @@ class SemanticscholarSearch extends React.Component {
     fetch(searchurl)
       .then(response => response.json())
       .then(data => {
-          this.props.setPaperTitle(data["title"])
+          this.props.setPaperTitleAndUrl(data["title"], data["url"])
  
           var citations = data["citations"].map(this.parsePaperInfo)
           citations.sort(this.sortByYear)
           var references = data["references"].map(this.parsePaperInfo)
           references.sort(this.sortByYear)
           this.props.setCiteAndRef(citations, references)
-          console.log(references)
         }
       )
       .catch(error=> console.log(error))
