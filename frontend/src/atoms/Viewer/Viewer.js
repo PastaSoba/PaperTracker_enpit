@@ -1,6 +1,7 @@
 import React from "react"
 import { Stage, Layer, Rect, Text, Group } from 'react-konva';
-
+import getPaperCitationCount from '../SemanticscholarSearch/CitationCount.js'
+import MakeColorCodeFromMag from '../ColorScale/ColorScale.js'
 
 const RECT_WIDTH = 200;  // 格子の横幅
 const RECT_HEIGHT = 50;  // 格子の縦幅
@@ -34,12 +35,58 @@ class YearRect extends React.Component {
 class PaperRect extends React.Component {
   constructor(props){
     super(props)
+    this.state = {
+      color: this.props.defaultcolor,
+      citations: null // キャッシュ
+    }
 
     this.clickhandler = this.clickhandler.bind(this)
   }
 
   clickhandler(){
     this.props.handleCellClicked(this.props.paper["doi"])
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    // 「引用論文の影響度を可視化する」にチェックが入ったときの処理
+
+    if (nextProps.enableGetMag && prevState.citations == null){
+      let count = getPaperCitationCount(nextProps.paper["doi"])
+      let c = MakeColorCodeFromMag(count, 0, 50);
+      switch (nextProps.defaultcolor){
+        case "lightgreen":
+          return {
+            citations: count,
+            color: "#"+c+"FF"+c
+          }
+        default:                // case "lightpink":
+          return {
+            citations: count,
+            color: "#FF"+c+c
+          }
+      }
+
+    } else if (nextProps.enableGetMag){
+      let count = prevState.citations
+      let c = MakeColorCodeFromMag(count, 0, 50);
+      switch (nextProps.defaultcolor){
+        case "lightgreen":
+          return {
+            citations: count,
+            color: "#"+c+"FF"+c
+          }
+        default:                // case "lightpink":
+          return {
+            citations: count,
+            color: "#FF"+c+c
+          }
+      }
+
+    } else{
+      return {
+        color: nextProps.defaultcolor
+      }
+    }
   }
 
   render(){
@@ -50,7 +97,7 @@ class PaperRect extends React.Component {
           y={(RECT_HEIGHT+RECT_MARGIN)*this.props.row}
           width={RECT_WIDTH}
           height={RECT_HEIGHT}
-          fill={this.props.color}
+          fill={this.state.color}
         />
         <Text
           x={(RECT_WIDTH+RECT_MARGIN)*(this.props.col+1)}
@@ -98,8 +145,9 @@ class Viewer extends React.Component {
                 paper={citations[i]}
                 row={row}
                 col={col}
-                color={'lightgreen'}
+                defaultcolor={'lightgreen'}
                 handleCellClicked={this.props.handleCellClicked}
+                enableGetMag={this.props.enableGetCitationsMag}
               />
             );
           }
@@ -127,8 +175,9 @@ class Viewer extends React.Component {
                 paper={references[i]}
                 row={row}
                 col={col}
-                color={'lightpink'}
+                defaultcolor={'lightpink'}
                 handleCellClicked={this.props.handleCellClicked}
+                enableGetMag={this.props.enableGetReferencesMag}
               />
             );
           }
