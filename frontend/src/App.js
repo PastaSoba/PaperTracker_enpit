@@ -7,8 +7,7 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      papertitle: null,
-      paperurl: null,
+      paper: null,
       citations: [],
       references: [],
       enableGetCitationsMag: false,  // 引用論文の影響度を調べる
@@ -18,7 +17,7 @@ class App extends React.Component {
     this.handleCitationsCheck = this.handleCitationsCheck.bind(this)
     this.handleReferencesCheck = this.handleReferencesCheck.bind(this)
     this.handleSetCiteAndRef = this.handleSetCiteAndRef.bind(this)
-    this.handleSetTitleAndUrl = this.handleSetTitleAndUrl.bind(this)
+    this.handleSetPaper = this.handleSetPaper.bind(this)
   }
 
   handleCitationsCheck(){
@@ -40,10 +39,9 @@ class App extends React.Component {
     })
   }
 
-  handleSetTitleAndUrl(title, url){
+  handleSetPaper(paper){
     this.setState({
-      papertitle: title,
-      paperurl: url,
+      paper: paper,
     })
   }
 
@@ -57,13 +55,13 @@ class App extends React.Component {
         <header className="App-header">
           <h1>Paper Tracker</h1>
           <SemanticscholarSearch
-            setPaperTitleAndUrl={this.handleSetTitleAndUrl}
+            setPaper={this.handleSetPaper}
             setCiteAndRef={this.handleSetCiteAndRef}
           />
           <p>
             検索論文名: 
-            <a href={this.state.paperurl}>
-            {this.state.papertitle}
+            <a href={this.state.paper == null ? "" : this.state.paper["url"]}>
+            {this.state.title == null ? "" : this.state.paper["title"]}
             </a>
           </p>
           <p>
@@ -88,7 +86,7 @@ class App extends React.Component {
         </header>
         <div>
           <Viewer
-            papertitle={this.state.papertitle}
+            paper={this.state.paper}
             citations={this.state.citations}
             references={this.state.references}
             enableGetCitationsMag={this.state.enableGetCitationsMag}

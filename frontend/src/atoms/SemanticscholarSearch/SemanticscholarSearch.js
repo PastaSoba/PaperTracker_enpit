@@ -32,7 +32,8 @@ class SemanticscholarSearch extends React.Component {
     fetch(searchurl)
       .then(response => response.json())
       .then(data => {
-          this.props.setPaperTitleAndUrl(data["title"], data["url"])
+          var paper = this.parsePaperInfo(data)
+          this.props.setPaper(paper)
           // 論文情報をパースする
           var citations = data["citations"].map(this.parsePaperInfo)
           var references = data["references"].map(this.parsePaperInfo)
