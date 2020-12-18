@@ -60,8 +60,8 @@ class App extends React.Component {
           />
           <p>
             検索論文名: 
-            <a href={this.state.paper == null ? "" : this.state.paper["url"]}>
-            {this.state.title == null ? "" : this.state.paper["title"]}
+            <a href={this.state.paper === null ? "" : this.state.paper["url"]}>
+            {this.state.paper === null ? "" : this.state.paper["title"]}
             </a>
           </p>
           <p>
