@@ -1,5 +1,8 @@
 import React from "react"
 
+/**
+ * SemanticScholarSearch API を利用して論文の引用情報を取得するモジュール
+ */
 class SemanticscholarSearch extends React.Component {
   constructor(props){
     super(props);
@@ -25,16 +28,16 @@ class SemanticscholarSearch extends React.Component {
     var doi = document.getElementById("paperdoi").value; // 10.1145/1950413.1950462
     var searchurl = BASE_URL + doi
 
-    /* Searching through API 
-    */
+    // APIを使って検索する
     fetch(searchurl)
       .then(response => response.json())
       .then(data => {
           this.props.setPaperTitleAndUrl(data["title"], data["url"])
- 
+          // 論文情報をパースする
           var citations = data["citations"].map(this.parsePaperInfo)
-          citations.sort(this.sortByYear)
           var references = data["references"].map(this.parsePaperInfo)
+          // 発行年が新しい順に論文情報を並べる
+          citations.sort(this.sortByYear)
           references.sort(this.sortByYear)
           this.props.setCiteAndRef(citations, references)
         }
