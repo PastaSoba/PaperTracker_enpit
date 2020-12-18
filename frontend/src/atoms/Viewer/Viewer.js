@@ -48,45 +48,27 @@ class PaperRect extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
-    // 「引用論文の影響度を可視化する」にチェックが入ったときの処理
-
-    if (nextProps.enableGetMag && prevState.citations == null){
-      let count = getPaperCitationCount(nextProps.paper["doi"])
-      let c = MakeColorCodeFromMag(count, 0, 50);
-      switch (nextProps.defaultcolor){
-        case "lightgreen":
-          return {
-            citations: count,
-            color: "#"+c+"FF"+c
-          }
-        default:                // case "lightpink":
-          return {
-            citations: count,
-            color: "#FF"+c+c
-          }
-      }
-
-    } else if (nextProps.enableGetMag){
-      let count = prevState.citations
-      let c = MakeColorCodeFromMag(count, 0, 50);
-      switch (nextProps.defaultcolor){
-        case "lightgreen":
-          return {
-            citations: count,
-            color: "#"+c+"FF"+c
-          }
-        default:                // case "lightpink":
-          return {
-            citations: count,
-            color: "#FF"+c+c
-          }
-      }
-
-    } else{
-      return {
-        color: nextProps.defaultcolor
-      }
+    // 「引用論文の影響度を可視化する」にチェックが入っていないときの処理
+    if (!nextProps.enableGetMag) {
+      return { color: nextProps.defaultcolor }
     }
+
+    // 「引用論文の影響度を可視化する」にチェックが入ったときの処理
+    // TODO: なぜstate.citationsに値がキャッシュされているのか分からない。そんな記述は書いていないはずだが
+    let count = prevState.citations == null ? getPaperCitationCount(nextProps.paper["doi"]) : prevState.citations;
+    let c = MakeColorCodeFromMag(count, 0, 50);
+    switch (nextProps.defaultcolor){
+      case "lightgreen":
+        return {
+          citations: count,
+          color: "#"+c+"FF"+c
+        }
+      default:                // case "lightpink":
+        return {
+          citations: count,
+          color: "#FF"+c+c
+        }
+      }
   }
 
   render(){
