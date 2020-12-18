@@ -1,11 +1,12 @@
 import React from "react"
 import { Stage, Layer, Rect, Text, Group } from 'react-konva';
+import _ from 'lodash';
 import getPaperCitationCount from '../SemanticscholarSearch/CitationCount.js'
 import MakeColorCodeFromMag from '../ColorScale/ColorScale.js'
 
 const RECT_WIDTH = 200;  // 格子の横幅
 const RECT_HEIGHT = 50;  // 格子の縦幅
-const RECT_MARGIN = 5;   // 格子間の距離
+const RECT_MARGIN = 15;   // 格子間の距離
 
 class YearRect extends React.Component {
   render(){
@@ -47,6 +48,24 @@ class PaperRect extends React.Component {
     this.props.handleCellClicked(this.props.paper["doi"])
   }
 
+  setSameAuthorMarker(){
+    let outerRect;
+    // 引用・被引用論文の著者の中に検索論文の著者が存在するとき
+    if (this.props.isWrittenBySameAuthor){
+      outerRect = <Rect
+        x={(RECT_WIDTH+RECT_MARGIN)*(this.props.col+1)-5}
+        y={(RECT_HEIGHT+RECT_MARGIN)*this.props.row-5}
+        width={RECT_WIDTH+10}
+        height={RECT_HEIGHT+10}
+        fill={'black'}
+      />
+    } else {
+      // 引用・被引用論文の著者の中に検索論文の著者が存在しないとき
+      outerRect = null;
+    }
+    return outerRect
+  }
+
   static getDerivedStateFromProps(nextProps, prevState){
     // 「引用論文の影響度を可視化する」にチェックが入っていないときの処理
     if (!nextProps.enableGetMag) {
@@ -74,6 +93,7 @@ class PaperRect extends React.Component {
   render(){
     return (
       <Group onclick={ this.clickhandler }>
+        {this.setSameAuthorMarker()}
         <Rect
           x={(RECT_WIDTH+RECT_MARGIN)*(this.props.col+1)}
           y={(RECT_HEIGHT+RECT_MARGIN)*this.props.row}
@@ -120,7 +140,10 @@ class Viewer extends React.Component {
                 <YearRect year={citations[i]["year"]} row={row} col={-1}/>
               );
             }
-            
+
+            let isWrittenBySameAuthor = _.intersection(
+              this.props.paper["authorId_list"],
+              this.props.citations[i]["authorId_list"]).length > 0;
             items.push(
               // 各論文データ
               <PaperRect 
@@ -128,6 +151,7 @@ class Viewer extends React.Component {
                 row={row}
                 col={col}
                 defaultcolor={'lightgreen'}
+                isWrittenBySameAuthor={isWrittenBySameAuthor}
                 handleCellClicked={this.props.handleCellClicked}
                 enableGetMag={this.props.enableGetCitationsMag}
               />
@@ -152,12 +176,17 @@ class Viewer extends React.Component {
                 <YearRect year={references[i]["year"]} row={row} col={-1}/>
               );
             }
+
+            let isWrittenBySameAuthor = _.intersection(
+              this.props.paper["authorId_list"],
+              this.props.references[i]["authorId_list"]).length > 0;
             items.push(
               <PaperRect 
                 paper={references[i]}
                 row={row}
                 col={col}
                 defaultcolor={'lightpink'}
+                isWrittenBySameAuthor={isWrittenBySameAuthor}
                 handleCellClicked={this.props.handleCellClicked}
                 enableGetMag={this.props.enableGetReferencesMag}
               />

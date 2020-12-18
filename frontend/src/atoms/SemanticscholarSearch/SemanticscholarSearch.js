@@ -11,11 +11,13 @@ class SemanticscholarSearch extends React.Component {
   }
 
   parsePaperInfo(data){
+    let authorId_list = data["authors"].map((author)=>{return author["authorId"]})
     return {
       "title": data["title"],
       "url": data["url"],
       "year": data["year"],
       "doi": data["doi"],
+      "authorId_list": authorId_list,
     }
   }
 
