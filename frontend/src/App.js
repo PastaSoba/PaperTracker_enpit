@@ -1,5 +1,6 @@
 import './App.css';
 import React from "react"
+
 import SemanticscholarSearch from "./atoms/SemanticscholarSearch/SemanticscholarSearch"
 import Viewer from "./atoms/Viewer/Viewer"
 
@@ -7,6 +8,7 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      inputvalue: this.props.qs.doi,  // 検索フォームに入力されている値
       paper: null,
       citations: [],
       references: [],
@@ -14,10 +16,19 @@ class App extends React.Component {
       enableGetReferencesMag: false, // 参考論文の影響度を調べる
     }
 
+    this.handleChange = this.handleChange.bind(this);
     this.handleCitationsCheck = this.handleCitationsCheck.bind(this)
     this.handleReferencesCheck = this.handleReferencesCheck.bind(this)
     this.handleSetCiteAndRef = this.handleSetCiteAndRef.bind(this)
     this.handleSetPaper = this.handleSetPaper.bind(this)
+    this.handleCellClicked = this.handleCellClicked.bind(this);
+  }
+
+  handleChange(event) {
+    // 検索フォームにdoiが入力されているときの動作
+    this.setState({
+      inputvalue: event.target.value
+    });
   }
 
   handleCitationsCheck(){
@@ -46,45 +57,48 @@ class App extends React.Component {
   }
 
   handleCellClicked(doi){
-    document.getElementById("paperdoi").value = doi
+    this.setState({
+      inputvalue: doi,
+    })
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>Paper Tracker</h1>
-          <SemanticscholarSearch
-            setPaper={this.handleSetPaper}
-            setCiteAndRef={this.handleSetCiteAndRef}
-          />
-          <p>
-            検索論文名: 
-            <a href={this.state.paper === null ? "" : this.state.paper["url"]}>
-            {this.state.paper === null ? "" : this.state.paper["title"]}
-            </a>
-          </p>
-          <p>
-            オプション（デモ動作）<br/>
-            <label>
+        <h1>Paper Tracker</h1>
+          <div>
+            <SemanticscholarSearch
+              setPaper={this.handleSetPaper}
+              setCiteAndRef={this.handleSetCiteAndRef}
+              onInputChange={this.handleChange}
+              inputvalue={this.state.inputvalue}
+            />
+            <div>
+              検索論文名: 
+              <a href={this.state.paper === null ? "" : this.state.paper["url"]}>
+                {this.state.paper === null ? "" : this.state.paper["title"]}
+              </a>
+            </div>
+            <div>
+              オプション（デモ動作）<br/>
+              <label>
               <input
                 type="checkbox"
                 onChange={this.handleCitationsCheck}
                 checked={this.state.enableGetCitationsMag}
               />
               被引用論文の影響度を可視化する
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                onChange={this.handleReferencesCheck}
-                checked={this.state.enableGetReferencesMag}
-              />
-              引用論文の影響度を可視化する
-            </label>
-          </p>
-        </header>
-        <div>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={this.handleReferencesCheck}
+                  checked={this.state.enableGetReferencesMag}
+                />
+                引用論文の影響度を可視化する
+              </label>
+            </div>
+          </div>
           <Viewer
             paper={this.state.paper}
             citations={this.state.citations}
@@ -93,7 +107,6 @@ class App extends React.Component {
             enableGetReferencesMag={this.state.enableGetReferencesMag}
             handleCellClicked={this.handleCellClicked}
           />
-        </div>
       </div>
     );
   }

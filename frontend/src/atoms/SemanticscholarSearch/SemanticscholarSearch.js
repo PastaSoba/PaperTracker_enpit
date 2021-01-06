@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom";
 
 /**
  * SemanticScholarSearch API を利用して論文の引用情報を取得するモジュール
@@ -6,7 +7,6 @@ import React from "react"
 class SemanticscholarSearch extends React.Component {
   constructor(props){
     super(props);
-
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
@@ -51,9 +51,11 @@ class SemanticscholarSearch extends React.Component {
   render(){
     return (
       <div>
-        <a> SemanticScholar Search : </a>
-        <input type = "search" placeholder = "調べたい論文のDOIを入力" id = "paperdoi" />
-        <button onClick = { this.handleOnClick }> 検索 </button>
+        <p> SemanticScholar Search : </p>
+        <input type = "search" placeholder = "調べたい論文のDOIを入力" id = "paperdoi" value={this.props.inputvalue} onChange={this.props.onInputChange}/>
+        <Link to={"?doi="+this.props.inputvalue}>
+          <button onClick = { this.handleOnClick }> 検索 </button>
+        </Link>
       </div>
     )
   }
