@@ -1,5 +1,12 @@
 import './App.css';
 import React from "react"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+} from "react-router-dom";
+
 import SemanticscholarSearch from "./atoms/SemanticscholarSearch/SemanticscholarSearch"
 import Viewer from "./atoms/Viewer/Viewer"
 
@@ -52,39 +59,39 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>Paper Tracker</h1>
-          <SemanticscholarSearch
-            setPaper={this.handleSetPaper}
-            setCiteAndRef={this.handleSetCiteAndRef}
-          />
-          <p>
-            検索論文名: 
-            <a href={this.state.paper === null ? "" : this.state.paper["url"]}>
-            {this.state.paper === null ? "" : this.state.paper["title"]}
-            </a>
-          </p>
-          <p>
-            オプション（デモ動作）<br/>
-            <label>
+        <h1>Paper Tracker</h1>
+        <Router>
+          <div>
+            <SemanticscholarSearch
+              setPaper={this.handleSetPaper}
+              setCiteAndRef={this.handleSetCiteAndRef}
+            />
+            <div>
+              検索論文名: 
+              <a href={this.state.paper === null ? "" : this.state.paper["url"]}>
+                {this.state.paper === null ? "" : this.state.paper["title"]}
+              </a>
+            </div>
+            <div>
+              オプション（デモ動作）<br/>
+              <label>
               <input
                 type="checkbox"
                 onChange={this.handleCitationsCheck}
                 checked={this.state.enableGetCitationsMag}
               />
               被引用論文の影響度を可視化する
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                onChange={this.handleReferencesCheck}
-                checked={this.state.enableGetReferencesMag}
-              />
-              引用論文の影響度を可視化する
-            </label>
-          </p>
-        </header>
-        <div>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={this.handleReferencesCheck}
+                  checked={this.state.enableGetReferencesMag}
+                />
+                引用論文の影響度を可視化する
+              </label>
+            </div>
+          </div>
           <Viewer
             paper={this.state.paper}
             citations={this.state.citations}
@@ -93,7 +100,7 @@ class App extends React.Component {
             enableGetReferencesMag={this.state.enableGetReferencesMag}
             handleCellClicked={this.handleCellClicked}
           />
-        </div>
+        </Router>
       </div>
     );
   }
