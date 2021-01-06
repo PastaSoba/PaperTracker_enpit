@@ -7,14 +7,7 @@ import { Router, Link } from "react-router-dom";
 class SemanticscholarSearch extends React.Component {
   constructor(props){
     super(props);
-    this.state = {value: ''};
-
-    this.handleChange = this.handleChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
   }
 
   parsePaperInfo(data){
@@ -59,8 +52,8 @@ class SemanticscholarSearch extends React.Component {
     return (
       <div>
         <p> SemanticScholar Search : </p>
-        <input type = "search" placeholder = "調べたい論文のDOIを入力" id = "paperdoi" value={this.state.value} onChange={this.handleChange}/>
-        <Link to={"?doi="+this.state.value}>
+        <input type = "search" placeholder = "調べたい論文のDOIを入力" id = "paperdoi" value={this.props.inputvalue} onChange={this.props.onInputChange}/>
+        <Link to={"?doi="+this.props.inputvalue}>
           <button onClick = { this.handleOnClick }> 検索 </button>
         </Link>
       </div>

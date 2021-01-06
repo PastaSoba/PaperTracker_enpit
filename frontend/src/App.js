@@ -2,9 +2,6 @@ import './App.css';
 import React from "react"
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
 } from "react-router-dom";
 
 import SemanticscholarSearch from "./atoms/SemanticscholarSearch/SemanticscholarSearch"
@@ -14,6 +11,7 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      inputvalue: '',               // 検索フォームに入力されている値
       paper: null,
       citations: [],
       references: [],
@@ -21,10 +19,19 @@ class App extends React.Component {
       enableGetReferencesMag: false, // 参考論文の影響度を調べる
     }
 
+    this.handleChange = this.handleChange.bind(this);
     this.handleCitationsCheck = this.handleCitationsCheck.bind(this)
     this.handleReferencesCheck = this.handleReferencesCheck.bind(this)
     this.handleSetCiteAndRef = this.handleSetCiteAndRef.bind(this)
     this.handleSetPaper = this.handleSetPaper.bind(this)
+    this.handleCellClicked = this.handleCellClicked.bind(this);
+  }
+
+  handleChange(event) {
+    // 検索フォームにdoiが入力されているときの動作
+    this.setState({
+      inputvalue: event.target.value
+    });
   }
 
   handleCitationsCheck(){
@@ -53,7 +60,9 @@ class App extends React.Component {
   }
 
   handleCellClicked(doi){
-    document.getElementById("paperdoi").value = doi
+    this.setState({
+      inputvalue: doi,
+    })
   }
 
   render() {
@@ -65,6 +74,8 @@ class App extends React.Component {
             <SemanticscholarSearch
               setPaper={this.handleSetPaper}
               setCiteAndRef={this.handleSetCiteAndRef}
+              onInputChange={this.handleChange}
+              inputvalue={this.state.inputvalue}
             />
             <div>
               検索論文名: 
