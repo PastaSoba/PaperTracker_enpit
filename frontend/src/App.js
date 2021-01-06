@@ -1,8 +1,5 @@
 import './App.css';
 import React from "react"
-import {
-  BrowserRouter as Router,
-} from "react-router-dom";
 
 import SemanticscholarSearch from "./atoms/SemanticscholarSearch/SemanticscholarSearch"
 import Viewer from "./atoms/Viewer/Viewer"
@@ -11,7 +8,7 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      inputvalue: '',               // 検索フォームに入力されている値
+      inputvalue: this.props.qs.doi,  // 検索フォームに入力されている値
       paper: null,
       citations: [],
       references: [],
@@ -69,7 +66,6 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>Paper Tracker</h1>
-        <Router>
           <div>
             <SemanticscholarSearch
               setPaper={this.handleSetPaper}
@@ -111,7 +107,6 @@ class App extends React.Component {
             enableGetReferencesMag={this.state.enableGetReferencesMag}
             handleCellClicked={this.handleCellClicked}
           />
-        </Router>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React from "react"
-import { Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 /**
  * SemanticScholarSearch API を利用して論文の引用情報を取得するモジュール
