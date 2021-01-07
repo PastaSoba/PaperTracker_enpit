@@ -1,9 +1,13 @@
 # PaperTracker
 
-論文の被引用・引用を可視化するという特徴を持ったwebアプリケーションを目指しています。
+論文の被引用・引用を可視化するという特徴を持ったwebアプリケーションを制作しています。
+
+β版ですが、こちらの[リンク](https://pastasoba.github.io/PaperTracker_enpit/)からサービスを利用することができます。
+
+現在、検索窓に論文のdoiを入力して検索することで、当該論文の引用論文・被引用論文を見る機能のみが利用できます。
 <!-- "hoge"が何かを簡潔に紹介する -->
 
-# DEMO
+# 完成形イメージ
 
 ![PaperTrackerの完成イメージ](./image.png)
 <!-- "hoge"の魅力が直感的に伝えわるデモ動画や図解を載せる -->
@@ -34,8 +38,8 @@ pip install huga_package
 # Usage
 
 
-DEMOの実行方法など、"hoge"の基本的な使い方を説明する
-
+<!-- DEMOの実行方法など、"hoge"の基本的な使い方を説明する -->
+webアプリケーションのコンパイル等は以下のコマンドで実行できます。
 ```bash
 git clone https://github.com/PastaSoba/PaperTracker_enpit
 cd frontend
