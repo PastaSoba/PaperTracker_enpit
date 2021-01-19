@@ -75,7 +75,8 @@ class App extends React.Component {
             />
             <div>
               検索論文名: 
-              <a href={this.state.paper === null ? "" : this.state.paper["url"]}>
+              <a href={this.state.paper === null ? "" : this.state.paper["url"]}
+                target="_blank" rel="noopener noreferrer">
                 {this.state.paper === null ? "" : this.state.paper["title"]}
               </a>
             </div>
