@@ -51,11 +51,12 @@ class SemanticscholarSearch extends React.Component {
   render(){
     return (
       <div>
-        <p> SemanticScholar Search : </p>
+        <p> SemanticScholar Search :　
         <input type = "search" placeholder = "調べたい論文のDOIを入力" id = "paperdoi" value={this.props.inputvalue} onChange={this.props.onInputChange}/>
         <Link to={"?doi="+this.props.inputvalue}>
           <button onClick = { this.handleOnClick }> 検索 </button>
         </Link>
+        </p>
       </div>
     )
   }
